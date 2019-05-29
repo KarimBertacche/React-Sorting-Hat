@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 const questions = [
-  { question: 'Choose a color', answers: ['gold' ,'black', 'blue', 'Green'] },
+  { question: 'Choose a color', answers: ['gold' ,'black', 'blue', 'Green']}, 
   { question: 'Choose an animal', answers: ['Lion', 'Badger', 'Eagle', 'Snake']},
   { question: 'Choose a trait that represent you', answers: ['Brave', 'Loyal', 'Wise', 'Cunning']}
 ];
@@ -14,7 +14,7 @@ class App extends Component {
     super();
     this.state = {
       questions: questions,
-      answer1: [],
+      answers: [''],
     }
   }
   
@@ -27,8 +27,9 @@ class App extends Component {
     console.log('I was clicked!!');
   }
 
-  inputAnswerHandler = (event) => {
-    this.setState({ answer1: event.target.value })
+  chosenAnswerHandler = (event) => {
+    let value = event.target.value;
+    this.setState({ answers: this.state.answers.concat(value)})
   }
 
   render() {
@@ -39,10 +40,8 @@ class App extends Component {
         </header>
         <button onClick={this.initiationHandler}>Initiation</button>
         <QuestionsContainer 
-          addAnswers={this.chooseHouseHandler} 
           questions={this.state.questions} 
-          // answer={this.state.answer}
-          inputAnswers={this.inputAnswerHandler}
+          answerChoice={this.chosenAnswerHandler}
         />
       </div>
     );
@@ -63,8 +62,8 @@ function QuestionsContainer(props) {
               answer2={question.answers[1]}
               answer3={question.answers[2]}
               answer4={question.answers[3]}
-              answersGiven={props.inputAnswers}
-              />
+              answerGiven={props.answerChoice}
+            />
           ) 
         })
       }  
@@ -78,10 +77,10 @@ function QuestionMaker(props) {
   return(
     <div>
       <h3>{props.question}</h3>
-      <button onClick={props.answersGiven}>{props.answer1}</button>
-      <button onClick={props.answersGiven}>{props.answer2}</button>
-      <button onClick={props.answersGiven}>{props.answer3}</button>
-      <button onClick={props.answersGiven}>{props.answer4}</button>
+      <button onClick={props.answerGiven}>{props.answer1}</button>
+      <button onClick={props.answerGiven}>{props.answer2}</button>
+      <button onClick={props.answerGiven}>{props.answer3}</button>
+      <button onClick={props.answerGiven}>{props.answer4}</button>
     </div>
   );
 }
